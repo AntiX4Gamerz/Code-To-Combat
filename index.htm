@@ -1,696 +1,362 @@
-`code_to_combat_banner.html`
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code to Combat Banner</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Press+Start+2P&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            overflow: hidden;
-            background-color: #0a0a12;
-        }
-        
-        .banner-container {
-            width: 1920px;
-            height: 600px;
-            position: relative;
-            background: linear-gradient(135deg, #0e0e1a 0%, #1a1a2e 100%);
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .tech-overlay {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle at 30% 50%, rgba(0, 100, 255, 0.1) 0%, transparent 30%),
-                radial-gradient(circle at 70% 50%, rgba(255, 100, 0, 0.1) 0%, transparent 30%);
-            z-index: 1;
-        }
-        
-        .circuit-lines {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(90deg, rgba(0, 150, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(0deg, rgba(0, 150, 255, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: 2;
-        }
-        
-        .keyboard {
-            position: absolute;
-            left: -50px;
-            bottom: 100px;
-            width: 700px;
-            height: 300px;
-            transform: perspective(1000px) rotateX(20deg) rotateY(-15deg);
-            background-color: rgba(20, 20, 40, 0.8);
-            border-radius: 10px;
-            box-shadow: 0 0 30px rgba(0, 150, 255, 0.3);
-            z-index: 3;
-        }
-        
-        .keyboard-glow {
-            position: absolute;
-            bottom: 90px;
-            left: 0;
-            width: 700px;
-            height: 10px;
-            background: rgba(0, 150, 255, 0.5);
-            box-shadow: 0 0 40px 10px rgba(0, 150, 255, 0.5);
-            filter: blur(15px);
-            z-index: 2;
-        }
-        
-        .controllers {
-            position: absolute;
-            right: 50px;
-            bottom: 50px;
-            width: 500px;
-            height: 250px;
-            display: flex;
-            gap: 30px;
-            z-index: 4;
-        }
-        
-        .controller {
-            width: 220px;
-            height: 220px;
-            background-color: rgba(30, 30, 60, 0.9);
-            border-radius: 20px;
-            border: 1px solid rgba(0, 150, 255, 0.3);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 0 20px rgba(0, 150, 255, 0.2);
-            transform: rotate(-5deg);
-        }
-        
-        .controller:nth-child(2) {
-            transform: rotate(5deg);
-        }
-        
-        .controller-image {
-            width: 80%;
-            height: 80%;
-            object-fit: contain;
-        }
-        
-        .swords {
-            position: absolute;
-            width: 300px;
-            height: 200px;
-            top: 150px;
-            right: 200px;
-            display: flex;
-            gap: 30px;
-            z-index: 5;
-        }
-        
-        .sword {
-            width: 120px;
-            height: 120px;
-            filter: drop-shadow(0 0 15px rgba(255, 100, 0, 0.7));
-        }
-        
-        .code-snippets {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: 6;
-            font-family: 'Courier New', monospace;
-            font-size: 40px;
-            color: rgba(0, 150, 255, 0.3);
-            opacity: 0.3;
-        }
-        
-        .code-snippet {
-            position: absolute;
-            animation: float 10s infinite linear;
-        }
-        
-        .code-snippet:nth-child(1) {
-            top: 80px;
-            left: 100px;
-            animation-delay: 0s;
-        }
-        
-        .code-snippet:nth-child(2) {
-            top: 200px;
-            left: 300px;
-            animation-delay: -2s;
-        }
-        
-        .code-snippet:nth-child(3) {
-            top: 400px;
-            left: 700px;
-            animation-delay: -4s;
-        }
-        
-        .code-snippet:nth-child(4) {
-            top: 150px;
-            right: 400px;
-            animation-delay: -6s;
-        }
-        
-        .code-snippet:nth-child(5) {
-            bottom: 100px;
-            right: 200px;
-            animation-delay: -8s;
-        }
-        
-        @keyframes float {
-            0% {
-                transform: translateY(0) rotate(0deg);
-            }
-            50% {
-                transform: translateY(-20px) rotate(5deg);
-            }
-            100% {
-                transform: translateY(0) rotate(0deg);
-            }
-        }
-        
-        .title-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .title {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            font-size: 80px;
-            text-transform: uppercase;
-            background: linear-gradient(90deg, #00a2ff, #ff6b00);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 20px rgba(0, 162, 255, 0.5);
-            margin-bottom: 20px;
-            letter-spacing: 3px;
-        }
-        
-        .subtitle {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 18px;
-            color: rgba(255, 255, 255, 0.7);
-            text-shadow: 0 0 10px rgba(0, 150, 255, 0.5);
-            letter-spacing: 2px;
-            text-align: center;
-        }
-        
-        .neon-pulse {
-            animation: pulse 3s infinite;
-        }
-        
-        @keyframes pulse {
-            0% {
-                opacity: 0.8;
-                text-shadow: 0 0 20px rgba(0, 162, 255, 0.5);
-            }
-            50% {
-                opacity: 1;
-                text-shadow: 0 0 30px rgba(0, 162, 255, 0.8), 0 0 50px rgba(0, 162, 255, 0.3);
-            }
-            100% {
-                opacity: 0.8;
-                text-shadow: 0 0 20px rgba(0, 162, 255, 0.5);
-            }
-        }
-        
-        .binary-code {
-            position: absolute;
-            bottom: 20px;
-            left: 0;
-            width: 100%;
-            height: 30px;
-            background: repeating-linear-gradient(
-                90deg,
-                transparent,
-                transparent 2px,
-                rgba(0, 150, 255, 0.1) 2px,
-                rgba(0, 150, 255, 0.1) 4px
-            );
-            overflow: hidden;
-            z-index: 7;
-        }
-        
-        .binary-item {
-            position: absolute;
-            font-family: 'Courier New', monospace;
-            font-size: 16px;
-            color: rgba(0, 150, 255, 0.3);
-            animation: scrollRight 20s linear infinite;
-        }
-        
-        @keyframes scrollRight {
-            0% {
-                transform: translateX(-100%);
-            }
-            100% {
-                transform: translateX(1920px);
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Code to Combat Banner</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Press+Start+2P&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      overflow-x: hidden;
+      background-color: #0a0a12;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .banner-container {
+      width: 100%;
+      height: 600px;
+      position: relative;
+      background: linear-gradient(135deg, #0e0e1a 0%, #1a1a2e 100%);
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .tech-overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-image:
+        radial-gradient(circle at 30% 50%, rgba(0, 100, 255, 0.1) 0%, transparent 30%),
+        radial-gradient(circle at 70% 50%, rgba(255, 100, 0, 0.1) 0%, transparent 30%);
+      z-index: 1;
+    }
+
+    .circuit-lines {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-image:
+        linear-gradient(90deg, rgba(0, 150, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(0, 150, 255, 0.05) 1px, transparent 1px);
+      background-size: 50px 50px;
+      z-index: 2;
+    }
+
+    .keyboard {
+      position: absolute;
+      left: -50px;
+      bottom: 100px;
+      width: 700px;
+      height: 300px;
+      transform: perspective(1000px) rotateX(20deg) rotateY(-15deg);
+      background-color: rgba(20, 20, 40, 0.8);
+      border-radius: 10px;
+      box-shadow: 0 0 30px rgba(0, 150, 255, 0.3);
+      z-index: 3;
+    }
+
+    .keyboard-glow {
+      position: absolute;
+      bottom: 90px;
+      left: 0;
+      width: 700px;
+      height: 10px;
+      background: rgba(0, 150, 255, 0.5);
+      box-shadow: 0 0 40px 10px rgba(0, 150, 255, 0.5);
+      filter: blur(15px);
+      z-index: 2;
+    }
+
+    .controllers {
+      position: absolute;
+      right: 50px;
+      bottom: 50px;
+      width: 500px;
+      height: 250px;
+      display: flex;
+      gap: 30px;
+      z-index: 4;
+    }
+
+    .controller {
+      width: 220px;
+      height: 220px;
+      background-color: rgba(30, 30, 60, 0.9);
+      border-radius: 20px;
+      border: 1px solid rgba(0, 150, 255, 0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 0 20px rgba(0, 150, 255, 0.2);
+      transform: rotate(-5deg);
+    }
+
+    .controller:nth-child(2) {
+      transform: rotate(5deg);
+    }
+
+    .controller-image {
+      width: 80%;
+      height: 80%;
+      object-fit: contain;
+    }
+
+    .swords {
+      position: absolute;
+      width: 300px;
+      height: 200px;
+      top: 150px;
+      right: 200px;
+      display: flex;
+      gap: 30px;
+      z-index: 5;
+    }
+
+    .sword {
+      width: 120px;
+      height: 120px;
+      filter: drop-shadow(0 0 15px rgba(255, 100, 0, 0.7));
+    }
+
+    .code-snippets {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 6;
+      font-family: 'Courier New', monospace;
+      font-size: 40px;
+      color: rgba(0, 150, 255, 0.3);
+      opacity: 0.3;
+    }
+
+    .code-snippet {
+      position: absolute;
+      animation: float 10s infinite linear;
+    }
+
+    .code-snippet:nth-child(1) { top: 80px; left: 100px; animation-delay: 0s; }
+    .code-snippet:nth-child(2) { top: 200px; left: 300px; animation-delay: -2s; }
+    .code-snippet:nth-child(3) { top: 400px; left: 700px; animation-delay: -4s; }
+    .code-snippet:nth-child(4) { top: 150px; right: 400px; animation-delay: -6s; }
+    .code-snippet:nth-child(5) { bottom: 100px; right: 200px; animation-delay: -8s; }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+      100% { transform: translateY(0) rotate(0deg); }
+    }
+
+    .title-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .title {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: 80px;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, #00a2ff, #ff6b00);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 20px rgba(0, 162, 255, 0.5);
+      margin-bottom: 20px;
+      letter-spacing: 3px;
+    }
+
+    .subtitle {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.7);
+      text-shadow: 0 0 10px rgba(0, 150, 255, 0.5);
+      letter-spacing: 2px;
+      text-align: center;
+    }
+
+    .neon-pulse {
+      animation: pulse 3s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.8; text-shadow: 0 0 20px rgba(0, 162, 255, 0.5); }
+      50% { opacity: 1; text-shadow: 0 0 30px rgba(0, 162, 255, 0.8), 0 0 50px rgba(0, 162, 255, 0.3); }
+      100% { opacity: 0.8; text-shadow: 0 0 20px rgba(0, 162, 255, 0.5); }
+    }
+
+    .binary-code {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      width: 100%;
+      height: 30px;
+      background: repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0, 150, 255, 0.1) 2px, rgba(0, 150, 255, 0.1) 4px);
+      overflow: hidden;
+      z-index: 7;
+    }
+
+    .binary-item {
+      position: absolute;
+      font-family: 'Courier New', monospace;
+      font-size: 16px;
+      color: rgba(0, 150, 255, 0.3);
+      animation: scrollRight 20s linear infinite;
+    }
+
+    @keyframes scrollRight {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(1920px); }
+    }
+
+    /* NEW CTA BUTTONS */
+    .cta-buttons {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 30px;
+      z-index: 20;
+    }
+
+    .btn {
+      padding: 15px 30px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px rgba(0, 150, 255, 0.4);
+    }
+
+    .neon-blue {
+      background: linear-gradient(90deg, #0077ff, #00e0ff);
+    }
+
+    .neon-orange {
+      background: linear-gradient(90deg, #ff6b00, #ffa600);
+    }
+
+    .btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 40px rgba(255, 255, 255, 0.4);
+    }
+
+    /* Upload section */
+    #submit {
+      padding: 60px 20px;
+      text-align: center;
+      background: #0f0f1f;
+      color: white;
+    }
+
+    #submit h2 {
+      font-size: 40px;
+      margin-bottom: 20px;
+    }
+
+    #submit p {
+      font-size: 20px;
+      margin-bottom: 40px;
+    }
+
+    #submit button {
+      padding: 15px 40px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #00a2ff, #ff6b00);
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(0, 162, 255, 0.5);
+    }
+  </style>
 </head>
 <body>
-    <div class="banner-container">
-        <div class="tech-overlay"></div>
-        <div class="circuit-lines"></div>
-        
-        <div class="code-snippets">
-            <div class="code-snippet">{ ... }</div>
-            <div class="code-snippet">&lt; / &gt;</div>
-            <div class="code-snippet">function()</div>
-            <div class="code-snippet">class { }</div>
-            <div class="code-snippet">const x = 1</div>
-        </div>
-        
-        <div class="keyboard"></div>
-        <div class="keyboard-glow"></div>
-        
-        <div class="controllers">
-            <div class="controller">
-                <img src="https://placehold.co/200x200" alt="Modern game controller with neon blue and orange buttons" class="controller-image" />
-            </div>
-            <div class="controller">
-                <img src="https://placehold.co/200x200" alt="Retro arcade joystick glowing with orange light" class="controller-image" />
-            </div>
-        </div>
-        
-        <div class="swords">
-            <img src="https://placehold.co/120x120" alt="Pixel art broadsword glowing with blue energy" class="sword" />
-            <img src="https://placehold.co/120x120" alt="Pixel art katana glowing with orange flames" class="sword" />
-        </div>
-        
-        <div class="title-container">
-            <div class="title neon-pulse">CODE TO COMBAT</div>
-            <div class="subtitle">DISCORD GAME DEVELOPMENT COMMUNITY</div>
-        </div>
-        
-        <div class="binary-code">
-            <div class="binary-item" style="top: 5px;">10100101 01101001 10011010 01010101 10101010</div>
-            <div class="binary-item" style="top: 10px; animation-delay: -5s;">01011010 10100101 01010101 10101010 01011010</div>
-            <div class="binary-item" style="top: 15px; animation-delay: -10s;">10101010 01010101 10100101 01011010 10101010</div>
-        </div>
+  <div class="banner-container">
+    <div class="tech-overlay"></div>
+    <div class="circuit-lines"></div>
+
+    <div class="code-snippets">
+      <div class="code-snippet">{ ... }</div>
+      <div class="code-snippet">&lt; / &gt;</div>
+      <div class="code-snippet">function()</div>
+      <div class="code-snippet">class { }</div>
+      <div class="code-snippet">const x = 1</div>
     </div>
 
-    <script>
-        // Add some interactivity to make it feel more dynamic
-        document.addEventListener('mousemove', function(e) {
-            const x = e.clientX / window.innerWidth;
-            const y = e.clientY / window.innerHeight;
-            
-            const banner = document.querySelector('.banner-container');
-            banner.style.backgroundPosition = `${x * 100}% ${y * 100}%`;
-            
-            const keyboard = document.querySelector('.keyboard');
-            keyboard.style.transform = `perspective(1000px) rotateX(${20 - y * 10}deg) rotateY(${-15 + x * 20}deg)`;
-            
-            const title = document.querySelector('.title');
-            title.style.textShadow = `0 0 ${20 + x * 40}px rgba(0, 162, 255, 0.5), 0 0 ${50 + y * 50}px rgba(0, 162, 255, 0.3)`;
-        });
-    </script>
-</body>
-</html>
+    <div class="keyboard"></div>
+    <div class="keyboard-glow"></div>
 
-```
-
-
-
-
-Created a horizontal digital banner (1920x600) for the "Code to Combat" Discord server with:
-- Futuristic dark tech aesthetic with circuit lines and neon effects
-- Glowing keyboard element with perspective effect
-- Pixel swords and game controller elements
-- Floating code snippets ({ }, < /> etc)
-- Bold "CODE TO COMBAT" text in blue-orange gradient with pulsing neon effect
-- Minimal subtext for clarity
-- Interactive elements that respond to mouse movement
-To view the banner, simply open the HTML file in any browser.
-
-
-🎨 **Generating images based on descriptions...**
-
-✅ **Images generated successfully! Here's your updated content:**
-
-`code_to_combat_banner.html`
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code to Combat Banner</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Press+Start+2P&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            overflow: hidden;
-            background-color: #0a0a12;
-        }
-        
-        .banner-container {
-            width: 1920px;
-            height: 600px;
-            position: relative;
-            background: linear-gradient(135deg, #0e0e1a 0%, #1a1a2e 100%);
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .tech-overlay {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle at 30% 50%, rgba(0, 100, 255, 0.1) 0%, transparent 30%),
-                radial-gradient(circle at 70% 50%, rgba(255, 100, 0, 0.1) 0%, transparent 30%);
-            z-index: 1;
-        }
-        
-        .circuit-lines {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(90deg, rgba(0, 150, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(0deg, rgba(0, 150, 255, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: 2;
-        }
-        
-        .keyboard {
-            position: absolute;
-            left: -50px;
-            bottom: 100px;
-            width: 700px;
-            height: 300px;
-            transform: perspective(1000px) rotateX(20deg) rotateY(-15deg);
-            background-color: rgba(20, 20, 40, 0.8);
-            border-radius: 10px;
-            box-shadow: 0 0 30px rgba(0, 150, 255, 0.3);
-            z-index: 3;
-        }
-        
-        .keyboard-glow {
-            position: absolute;
-            bottom: 90px;
-            left: 0;
-            width: 700px;
-            height: 10px;
-            background: rgba(0, 150, 255, 0.5);
-            box-shadow: 0 0 40px 10px rgba(0, 150, 255, 0.5);
-            filter: blur(15px);
-            z-index: 2;
-        }
-        
-        .controllers {
-            position: absolute;
-            right: 50px;
-            bottom: 50px;
-            width: 500px;
-            height: 250px;
-            display: flex;
-            gap: 30px;
-            z-index: 4;
-        }
-        
-        .controller {
-            width: 220px;
-            height: 220px;
-            background-color: rgba(30, 30, 60, 0.9);
-            border-radius: 20px;
-            border: 1px solid rgba(0, 150, 255, 0.3);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 0 20px rgba(0, 150, 255, 0.2);
-            transform: rotate(-5deg);
-        }
-        
-        .controller:nth-child(2) {
-            transform: rotate(5deg);
-        }
-        
-        .controller-image {
-            width: 80%;
-            height: 80%;
-            object-fit: contain;
-        }
-        
-        .swords {
-            position: absolute;
-            width: 300px;
-            height: 200px;
-            top: 150px;
-            right: 200px;
-            display: flex;
-            gap: 30px;
-            z-index: 5;
-        }
-        
-        .sword {
-            width: 120px;
-            height: 120px;
-            filter: drop-shadow(0 0 15px rgba(255, 100, 0, 0.7));
-        }
-        
-        .code-snippets {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: 6;
-            font-family: 'Courier New', monospace;
-            font-size: 40px;
-            color: rgba(0, 150, 255, 0.3);
-            opacity: 0.3;
-        }
-        
-        .code-snippet {
-            position: absolute;
-            animation: float 10s infinite linear;
-        }
-        
-        .code-snippet:nth-child(1) {
-            top: 80px;
-            left: 100px;
-            animation-delay: 0s;
-        }
-        
-        .code-snippet:nth-child(2) {
-            top: 200px;
-            left: 300px;
-            animation-delay: -2s;
-        }
-        
-        .code-snippet:nth-child(3) {
-            top: 400px;
-            left: 700px;
-            animation-delay: -4s;
-        }
-        
-        .code-snippet:nth-child(4) {
-            top: 150px;
-            right: 400px;
-            animation-delay: -6s;
-        }
-        
-        .code-snippet:nth-child(5) {
-            bottom: 100px;
-            right: 200px;
-            animation-delay: -8s;
-        }
-        
-        @keyframes float {
-            0% {
-                transform: translateY(0) rotate(0deg);
-            }
-            50% {
-                transform: translateY(-20px) rotate(5deg);
-            }
-            100% {
-                transform: translateY(0) rotate(0deg);
-            }
-        }
-        
-        .title-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .title {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            font-size: 80px;
-            text-transform: uppercase;
-            background: linear-gradient(90deg, #00a2ff, #ff6b00);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 20px rgba(0, 162, 255, 0.5);
-            margin-bottom: 20px;
-            letter-spacing: 3px;
-        }
-        
-        .subtitle {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 18px;
-            color: rgba(255, 255, 255, 0.7);
-            text-shadow: 0 0 10px rgba(0, 150, 255, 0.5);
-            letter-spacing: 2px;
-            text-align: center;
-        }
-        
-        .neon-pulse {
-            animation: pulse 3s infinite;
-        }
-        
-        @keyframes pulse {
-            0% {
-                opacity: 0.8;
-                text-shadow: 0 0 20px rgba(0, 162, 255, 0.5);
-            }
-            50% {
-                opacity: 1;
-                text-shadow: 0 0 30px rgba(0, 162, 255, 0.8), 0 0 50px rgba(0, 162, 255, 0.3);
-            }
-            100% {
-                opacity: 0.8;
-                text-shadow: 0 0 20px rgba(0, 162, 255, 0.5);
-            }
-        }
-        
-        .binary-code {
-            position: absolute;
-            bottom: 20px;
-            left: 0;
-            width: 100%;
-            height: 30px;
-            background: repeating-linear-gradient(
-                90deg,
-                transparent,
-                transparent 2px,
-                rgba(0, 150, 255, 0.1) 2px,
-                rgba(0, 150, 255, 0.1) 4px
-            );
-            overflow: hidden;
-            z-index: 7;
-        }
-        
-        .binary-item {
-            position: absolute;
-            font-family: 'Courier New', monospace;
-            font-size: 16px;
-            color: rgba(0, 150, 255, 0.3);
-            animation: scrollRight 20s linear infinite;
-        }
-        
-        @keyframes scrollRight {
-            0% {
-                transform: translateX(-100%);
-            }
-            100% {
-                transform: translateX(1920px);
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="banner-container">
-        <div class="tech-overlay"></div>
-        <div class="circuit-lines"></div>
-        
-        <div class="code-snippets">
-            <div class="code-snippet">{ ... }</div>
-            <div class="code-snippet">< / ></div>
-            <div class="code-snippet">function()</div>
-            <div class="code-snippet">class { }</div>
-            <div class="code-snippet">const x = 1</div>
-        </div>
-        
-        <div class="keyboard"></div>
-        <div class="keyboard-glow"></div>
-        
-        <div class="controllers">
-            <div class="controller">
-                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ff3ee8d9-fc0c-489b-9ac4-3efd56e5b374.png" alt="Modern game controller with neon blue and orange buttons" class="controller-image" />
-            </div>
-            <div class="controller">
-                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/c9bbb80b-7ff6-4ef1-a2dd-aa8611f741a0.png" alt="Retro arcade joystick glowing with orange light" class="controller-image" />
-            </div>
-        </div>
-        
-        <div class="swords">
-            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/00f756cb-280c-4a48-99fa-ffff101bf979.png" alt="Pixel art broadsword glowing with blue energy" class="sword" />
-            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b0afd009-92c0-4333-b1c0-e6ed235ab501.png" alt="Pixel art katana glowing with orange flames" class="sword" />
-        </div>
-        
-        <div class="title-container">
-            <div class="title neon-pulse">CODE TO COMBAT</div>
-            <div class="subtitle">DISCORD GAME DEVELOPMENT COMMUNITY</div>
-        </div>
-        
-        <div class="binary-code">
-            <div class="binary-item" style="top: 5px;">10100101 01101001 10011010 01010101 10101010</div>
-            <div class="binary-item" style="top: 10px; animation-delay: -5s;">01011010 10100101 01010101 10101010 01011010</div>
-            <div class="binary-item" style="top: 15px; animation-delay: -10s;">10101010 01010101 10100101 01011010 10101010</div>
-        </div>
+    <div class="controllers">
+      <div class="controller">
+        <img src="https://placehold.co/200x200" alt="Game Controller" class="controller-image" />
+      </div>
+      <div class="controller">
+        <img src="https://placehold.co/200x200" alt="Arcade Stick" class="controller-image" />
+      </div>
     </div>
 
-    <script>
-        // Add some interactivity to make it feel more dynamic
-        document.addEventListener('mousemove', function(e) {
-            const x = e.clientX / window.innerWidth;
-            const y = e.clientY / window.innerHeight;
-            
-            const banner = document.querySelector('.banner-container');
-            banner.style.backgroundPosition = `${x * 100}% ${y * 100}%`;
-            
-            const keyboard = document.querySelector('.keyboard');
-            keyboard.style.transform = `perspective(1000px) rotateX(${20 - y * 10}deg) rotateY(${-15 + x * 20}deg)`;
-            
-            const title = document.querySelector('.title');
-            title.style.textShadow = `0 0 ${20 + x * 40}px rgba(0, 162, 255, 0.5), 0 0 ${50 + y * 50}px rgba(0, 162, 255, 0.3)`;
-        });
-    </script>
+    <div class="swords">
+      <img src="https://placehold.co/120x120" alt="Sword" class="sword" />
+      <img src="https://placehold.co/120x120" alt="Katana" class="sword" />
+    </div>
+
+    <div class="title-container">
+      <div class="title neon-pulse">CODE TO COMBAT</div>
+      <div class="subtitle">DISCORD GAME DEVELOPMENT COMMUNITY</div>
+    </div>
+
+    <div class="binary-code">
+      <div class="binary-item" style="top: 5px;">10100101 01101001 10011010 01010101 10101010</div>
+      <div class="binary-item" style="top: 10px; animation-delay: -5s;">01011010 10100101 01010101 10101010 01011010</div>
+      <div class="binary-item" style="top: 15px; animation-delay: -10s;">10101010 01010101 10100101 01011010 10101010</div>
+    </div>
+
+    <!-- NEW BUTTONS -->
+    <div class="cta-buttons">
+      <a href="https://discord.gg/kxbVdnbM" target="_blank" class="btn neon-blue">Join Our Discord</a>
+      <a href="#submit" class="btn neon-orange">Submit Your Game</a>
+    </div>
+  </div>
+
+  <!-- Upload Section -->
+  <div id="submit">
+    <h2>🎮 Upload Your Game</h2>
+    <p>We're building a powerful community of indie devs. Showcase your work, get feedback, and connect with others on our Discord.</p>
+    <button>Upload Coming Soon...</button>
+  </div>
+
+  <script>
+    document.addEventListener('mousemove', function (e) {
+      const x = e.clientX / window.innerWidth;
+      const y = e.clientY / window.innerHeight;
+
+      const keyboard = document.querySelector('.keyboard');
+      keyboard.style.transform = `perspective(1000px) rotateX(${20 - y * 10}deg) rotateY(${-15 + x * 20}deg)`;
+
+      const title = document.querySelector('.title');
+      title.style.textShadow = `0 0 ${20 + x * 40}px rgba(0, 162, 255, 0.5), 0 0 ${50 + y * 50}px rgba(0, 162, 255, 0.3)`;
+    });
+  </script>
 </body>
 </html>
-
-```
-
